@@ -15,3 +15,132 @@ example：
   你可能认为这两个数不包含任何的零，除了数字0它本身。
   
 解决方案：
+
+#include<iostream>
+#include<malloc.h>
+using namespace std;
+typedef struct Node
+{
+	int element;
+	 struct Node *link;
+};
+void Create(Node *p,int m)        //创建链表
+{
+	for (int i = 1; i < m+1; i++)
+	{
+		Node *NewNode = new Node;
+		cin >> NewNode->element;
+		p->link = NewNode;
+		p = NewNode;
+	}
+
+}
+void Exchange(Node *p, int m,Node *node)    //链表逆序
+{
+	int b = m,a;
+	for (int i = 0; i < m; i++)
+	{
+		Node *q;
+		q = p;
+		for (int j = 0; j < b; j++)
+		{
+			a = p->element;
+			p = p->link;
+		}
+		Node* NewNode = new Node;
+		NewNode->element = a;
+		node->link = NewNode;
+		node = NewNode;
+		b--;
+		p = q;
+	}
+	
+}
+void show(Node *q,int m)    //打印链表
+{
+	for (int i = 0; i < m; i++)
+	{
+		cout << q->element;
+		q = q->link;
+	}
+	cout << endl;
+}
+int add(Node *p, Node *q, int m, int n, Node *sum)   //链表相加
+{
+	int a ,b , c=0 ,d=0;
+	if (n > m)
+	{
+		m = n;
+	}
+	for (int i = 0; i < m; i++)
+	{
+		a = q->element;
+		q = q->link;
+		b = p->element;
+		p = p->link;
+		Node *NewNode = new Node;
+		if (a + b >= 10)
+		{
+			NewNode->element = a + b - 10 + c;
+			c = 1;
+			sum->link = NewNode;
+			sum = NewNode;
+			d++;
+		}
+		else
+		{
+			NewNode->element = a + b + c;
+			c = 0;
+			sum->link = NewNode;
+			sum = NewNode;
+			d++;
+		}
+	}
+	
+	return d;
+}
+int main()
+{
+	Node *head,*headp,*nodep,*nodeq,*sum;       //中间节点
+	Node *q,*p,*node,*nodeq1,*sum1;       //头节点
+	int m,n,d=0;
+	head = new Node;
+	q = new Node;
+	node = new Node;
+	nodep = new Node;
+	headp = new Node;
+	p = new Node;
+	nodeq = new Node;
+	nodeq1 = new Node;
+	sum = new Node;
+	sum1 = new Node;
+	head->element = 0;
+	head->link = NULL;
+	headp->element=0;
+	node->element = 0;
+	headp->link = NULL;
+	node->link = NULL;
+	cout << "请输入第一个链表的长度：";
+	cin >> m;
+	Create(head,m);
+	q = head->link;
+	cout << "请输入第二个链表的长度：";
+	cin >> n;
+	Create(headp, n);
+	p = headp->link;
+	show(q, m);
+	show(p, n);
+	Exchange(q, m, nodep);
+	node = nodep->link;
+	Exchange(p, n, nodeq);
+	nodeq1 = nodeq->link;
+	show(node, m);
+	show(nodeq1, n);
+	d = add(q, p, m, n, sum);
+	sum1 = sum->link;
+	show(sum1, d);
+	system("pause");
+}
+
+
+写的很复杂，很垃圾，要求也没全实现，好好学习别人的优秀方案。
